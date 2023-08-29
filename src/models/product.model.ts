@@ -20,7 +20,6 @@ const ProductSchema = new Schema({
   cell: { type: [String] },
   description: [{ type: Schema.Types.ObjectId, ref: 'Description' }],
   category: { type: Schema.Types.ObjectId, ref: 'Category' },
-  categoryId: { type: Schema.Types.ObjectId, ref: 'Category' },
 });
 
 export const Product = models.Product || model('Product', ProductSchema);
