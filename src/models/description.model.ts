@@ -13,6 +13,5 @@ const DescriptionSchema = new Schema<IDescription>({
   productId: { type: Schema.Types.ObjectId, ref: 'Product' },
 });
 
-export const Description =
-  (models?.Description as Model<IDescription>) ||
-  model('Description', DescriptionSchema);
+export const Description: Model<IDescription> =
+  models?.Description || model('Description', DescriptionSchema);

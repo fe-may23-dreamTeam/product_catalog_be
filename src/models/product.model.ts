@@ -46,5 +46,5 @@ const ProductSchema = new Schema<IProduct>({
   category: { type: Schema.Types.ObjectId, ref: Category },
 });
 
-export const Product =
-  (models?.Product as Model<IProduct>) || model('Product', ProductSchema);
+export const Product: Model<IProduct> =
+  models?.Product || model('Product', ProductSchema);
