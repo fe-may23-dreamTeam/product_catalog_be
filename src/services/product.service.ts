@@ -5,13 +5,8 @@ const getAll = async (page: number, perPage: number) => {
   const productsCollection = await Product.find().skip(offset).limit(perPage);
   const productsCollectionCount = await Product.count();
 
-  const totalPages = Math.ceil(productsCollectionCount / perPage);
-
   const data = {
     totalProducts: productsCollectionCount,
-    totalPages,
-    perPage,
-    currentPage: page,
     data: productsCollection,
   };
 
