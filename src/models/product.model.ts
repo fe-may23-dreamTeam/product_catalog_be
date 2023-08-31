@@ -1,4 +1,6 @@
 import { Schema, model, models } from 'mongoose';
+import { Category } from './category.model';
+import { Description } from './description.model';
 
 const ProductSchema = new Schema({
   id: { type: String, required: true },
@@ -18,8 +20,8 @@ const ProductSchema = new Schema({
   camera: { type: String },
   zoom: { type: String },
   cell: { type: [String] },
-  description: [{ type: Schema.Types.ObjectId, ref: 'Description' }],
-  category: { type: Schema.Types.ObjectId, ref: 'Category' },
+  description: [{ type: Schema.Types.ObjectId, ref: Description }],
+  category: { type: Schema.Types.ObjectId, ref: Category },
 });
 
-export const Product = models.Product || model('Product', ProductSchema);
+export const Product = models?.Product || model('Product', ProductSchema);
