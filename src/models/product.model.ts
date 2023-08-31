@@ -1,8 +1,30 @@
-import { Schema, model, models } from 'mongoose';
-import { Category } from './category.model';
-import { Description } from './description.model';
+import { Model, Schema, model, models } from 'mongoose';
+import { Category, ICategory } from './category.model';
+import { Description, IDescription } from './description.model';
 
-const ProductSchema = new Schema({
+export interface IProduct {
+  id: string;
+  namespaceId: string;
+  name: string;
+  capacityAvailable?: string[];
+  capacity?: string;
+  priceRegular: number;
+  priceDiscount: number;
+  colorsAvailable: string[];
+  color: string;
+  images: string[];
+  screen?: string;
+  resolution?: string;
+  processor?: string;
+  ram?: string;
+  camera?: string;
+  zoom?: string;
+  cell?: string[];
+  description: IDescription[];
+  category: ICategory;
+}
+
+const ProductSchema = new Schema<IProduct>({
   id: { type: String, required: true },
   namespaceId: { type: String, required: true },
   name: { type: String, required: true },
@@ -24,4 +46,5 @@ const ProductSchema = new Schema({
   category: { type: Schema.Types.ObjectId, ref: Category },
 });
 
-export const Product = models?.Product || model('Product', ProductSchema);
+export const Product =
+  (models?.Product as Model<IProduct>) || model('Product', ProductSchema);

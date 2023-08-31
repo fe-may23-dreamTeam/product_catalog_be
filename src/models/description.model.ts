@@ -1,11 +1,18 @@
-/* eslint-disable operator-linebreak */
-import { Schema, model, models } from 'mongoose';
+import { Schema, model, models, Model } from 'mongoose';
+import { IProduct } from './product.model';
 
-const DescriptionSchema = new Schema({
+export interface IDescription {
+  title: string;
+  text: string[];
+  productId: IProduct;
+}
+
+const DescriptionSchema = new Schema<IDescription>({
   title: { type: String, required: true },
   text: { type: [String], required: true },
   productId: { type: Schema.Types.ObjectId, ref: 'Product' },
 });
 
 export const Description =
-  models?.Description || model('Description', DescriptionSchema);
+  (models?.Description as Model<IDescription>) ||
+  model('Description', DescriptionSchema);

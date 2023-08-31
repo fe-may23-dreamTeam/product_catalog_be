@@ -13,6 +13,7 @@
   "rules": {
     "no-console": "off",
     "no-unused-vars": "warn",
+    "operator-linebreak": "off",
     "space-before-function-paren": "off"
   }
 }
