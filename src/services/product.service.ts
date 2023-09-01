@@ -13,4 +13,11 @@ const getAll = async (page: number, perPage: number) => {
   return data;
 };
 
-export default { getAll };
+const getOneProduct = async (productId: string) => {
+  const foundProduct = await Product.findById(productId)
+    .populate('description').populate('category');
+
+  return foundProduct;
+};
+
+export default { getAll, getOneProduct };

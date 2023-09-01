@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-shadow */
 import { Request, Response } from 'express';
 import productsService from '../services/product.service';
@@ -19,4 +20,20 @@ const getAll = async (req: Request, res: Response) => {
   }
 };
 
-export default { getAll };
+const getOne = async (req: Request, res: Response) => {
+  const productId = req.params.id;
+
+  try {
+    const foundProduct = await productsService.getOneProduct(productId);
+
+    if (foundProduct) {
+      res.status(200).json(foundProduct);
+    } else {
+      res.status(404).send('Not found');
+    }
+  } catch {
+    res.status(500).send('Error');
+  }
+};
+
+export default { getAll, getOne };

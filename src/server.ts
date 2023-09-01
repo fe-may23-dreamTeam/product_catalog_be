@@ -17,3 +17,4 @@ app.get('/', async (_, res) => {
 });
 
 app.get('/products', productsController.getAll);
+app.get('/products/:id', productsController.getOne);
