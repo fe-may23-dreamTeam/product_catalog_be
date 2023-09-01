@@ -3,6 +3,7 @@ import { Category, ICategory } from './category.model';
 import { Description, IDescription } from './description.model';
 
 export interface IProduct {
+  _id: string;
   id: string;
   namespaceId: string;
   name: string;

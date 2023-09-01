@@ -2,6 +2,7 @@ import { Schema, model, models, Model } from 'mongoose';
 import { IProduct } from './product.model';
 
 export interface IDescription {
+  _id: string;
   title: string;
   text: string[];
   productId: IProduct;
