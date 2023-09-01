@@ -24,7 +24,7 @@ const getOne = async (req: Request, res: Response) => {
   const productId = req.params.id;
 
   try {
-    const foundProduct = await productsService.getOneProduct(productId);
+    const foundProduct = await productsService.getOne(productId);
 
     if (foundProduct) {
       res.status(200).json(foundProduct);

@@ -13,11 +13,12 @@ const getAll = async (page: number, perPage: number) => {
   return data;
 };
 
-const getOneProduct = async (productId: string) => {
+const getOne = async (productId: string) => {
   const foundProduct = await Product.findById(productId)
-    .populate('description').populate('category');
+    .populate('description')
+    .populate('category');
 
   return foundProduct;
 };
 
-export default { getAll, getOneProduct };
+export default { getAll, getOne };
