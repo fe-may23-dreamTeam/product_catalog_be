@@ -28,4 +28,12 @@ const getAll = async ({ page, perPage, sortBy }: Params) => {
   return data;
 };
 
-export default { getAll };
+const getOne = async (productId: string) => {
+  const foundProduct = await Product.findById(productId)
+    .populate('description')
+    .populate('category');
+
+  return foundProduct;
+};
+
+export default { getAll, getOne };
