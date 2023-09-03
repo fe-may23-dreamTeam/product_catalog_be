@@ -22,12 +22,13 @@ The `/products` endpoint returns a list of products in JSON format. Example resp
 
 ```json
 {
-  totalProducts: 71,
-  data: [
+  "totalProducts": 71,
+  "data": [
     {
-    id: string,
-    priceDiscount: number.
-    ...
+      "id": "string",
+      "priceDiscount": 1000,
+      "name": "string"
+      ...
     },
     // other products
   ]
