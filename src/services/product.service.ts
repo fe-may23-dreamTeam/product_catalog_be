@@ -8,7 +8,7 @@ type Params = {
 
 const getAll = async ({ page, perPage, sortBy }: Params) => {
   const offset = perPage * (page - 1);
-  const order = sortBy === 'newest' ? 'desc' : 'asc';
+  const order = sortBy === 'Newest' ? 'desc' : 'asc';
 
   const productsCollection = await Product.find()
     .populate('category')
