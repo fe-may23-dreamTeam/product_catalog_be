@@ -36,4 +36,27 @@ const getOne = async (productId: string) => {
   return foundProduct;
 };
 
-export default { getAll, getOne };
+const getFiltered = async (query: string) => {
+  const products = await Product.aggregate([
+    {
+      $lookup: {
+        from: 'categories',
+        localField: 'category',
+        foreignField: '_id',
+        as: 'category',
+      },
+    },
+    {
+      $match: {
+        $or: [
+          { name: { $regex: query, $options: 'i' } },
+          { 'category.name': { $regex: query, $options: 'i' } },
+        ],
+      },
+    },
+  ]);
+
+  return products;
+};
+
+export default { getAll, getOne, getFiltered };

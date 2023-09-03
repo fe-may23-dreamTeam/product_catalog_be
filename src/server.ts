@@ -1,8 +1,9 @@
+/* eslint-disable no-shadow */
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import { mongooseConnect } from './utils/db';
-import productsController from './controllers/product.controller';
+import productsRouter from './routes/products';
 
 dotenv.config();
 
@@ -16,5 +17,4 @@ app.get('/', async (_, res) => {
   res.status(200).send('Hello from DreamTeam');
 });
 
-app.get('/products', productsController.getAll);
-app.get('/products/:id', productsController.getOne);
+app.use('/products', productsRouter);
