@@ -1,10 +1,21 @@
 import { Product } from '../models/product.model';
 
-const getAll = async (page: number, perPage: number) => {
+type Params = {
+  page: number;
+  perPage: number;
+  sortBy: string;
+};
+
+const getAll = async ({ page, perPage, sortBy }: Params) => {
   const offset = perPage * (page - 1);
+  const order = sortBy === 'newest' ? 'desc' : 'asc';
+
   const productsCollection = await Product.find()
     .populate('category')
     .populate('description')
+    .sort({
+      updatedAt: order,
+    })
     .skip(offset)
     .limit(perPage);
   const productsCollectionCount = await Product.count();
