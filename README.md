@@ -28,9 +28,9 @@ The `/products` endpoint returns a list of products in JSON format. Example resp
       "id": "string",
       "priceDiscount": 1000,
       "name": "string"
-      ...
+      // ...
     },
-    // other products
+    // Other products...
   ]
 }
 ```
