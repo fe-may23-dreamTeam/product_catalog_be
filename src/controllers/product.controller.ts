@@ -38,7 +38,7 @@ const getOne = async (req: Request, res: Response) => {
 };
 
 interface ReqQuery {
-  query: string,
+  query: string;
 }
 
 const getFiltered = async (
@@ -59,7 +59,7 @@ const getFiltered = async (
     res.status(500).send({
       data: null,
     });
-  };
+  }
 };
 
 export default { getAll, getOne, getFiltered };

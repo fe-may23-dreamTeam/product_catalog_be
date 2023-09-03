@@ -5,7 +5,7 @@ import productsController from '../controllers/product.controller';
 const router = express.Router();
 
 interface ReqQuery {
-  query: string,
+  query: string;
 }
 
 const isQuery = (
