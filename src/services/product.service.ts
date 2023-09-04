@@ -39,7 +39,9 @@ const getOne = async (productId: string) => {
 const getFiltered = async (query: string) => {
   const products = await Product.find({
     name: { $regex: query, $options: 'i' },
-  }).populate('category').populate('description');
+  })
+    .populate('category')
+    .populate('description');
 
   return products;
 };
