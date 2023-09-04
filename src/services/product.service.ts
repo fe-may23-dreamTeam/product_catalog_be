@@ -28,4 +28,22 @@ const getAll = async ({ page, perPage, sortBy }: Params) => {
   return data;
 };
 
-export default { getAll };
+const getOne = async (productId: string) => {
+  const foundProduct = await Product.findById(productId)
+    .populate('description')
+    .populate('category');
+
+  return foundProduct;
+};
+
+const getFiltered = async (query: string) => {
+  const products = await Product.find({
+    name: { $regex: query, $options: 'i' },
+  })
+    .populate('category')
+    .populate('description');
+
+  return products;
+};
+
+export default { getAll, getOne, getFiltered };
