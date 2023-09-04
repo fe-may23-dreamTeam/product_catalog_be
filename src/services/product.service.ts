@@ -1,4 +1,4 @@
-import { Product } from '../models/product.model';
+import { IProduct, Product } from '../models/product.model';
 
 type Params = {
   page: number;
@@ -46,4 +46,29 @@ const getFiltered = async (query: string) => {
   return products;
 };
 
-export default { getAll, getOne, getFiltered };
+function getRandom(products: IProduct[], limit: number) {
+  const randomProducts = [];
+  const indexes: number[] = [];
+  let i = 0;
+
+  while (i < limit) {
+    const randomIndex = Math.floor(Math.random() * products.length);
+
+    if (indexes.includes(randomIndex)) {
+      continue;
+    } else {
+      indexes.push(randomIndex);
+      i++;
+      randomProducts.push(products[randomIndex]);
+    }
+  }
+
+  return randomProducts;
+}
+
+export default {
+  getAll,
+  getOne,
+  getFiltered,
+  getRandom,
+};
