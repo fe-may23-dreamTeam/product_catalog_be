@@ -28,7 +28,7 @@ const getOne = async (req: Request, res: Response) => {
     const foundProduct = await productsService.getOne(productId);
 
     if (foundProduct) {
-      res.status(200).json(foundProduct);
+      res.status(200).send(foundProduct);
     } else {
       res.status(404).send('Not found');
     }

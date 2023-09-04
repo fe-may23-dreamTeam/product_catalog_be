@@ -37,24 +37,9 @@ const getOne = async (productId: string) => {
 };
 
 const getFiltered = async (query: string) => {
-  const products = await Product.aggregate([
-    {
-      $lookup: {
-        from: 'categories',
-        localField: 'category',
-        foreignField: '_id',
-        as: 'category',
-      },
-    },
-    {
-      $match: {
-        $or: [
-          { name: { $regex: query, $options: 'i' } },
-          { 'category.name': { $regex: query, $options: 'i' } },
-        ],
-      },
-    },
-  ]);
+  const products = await Product.find({
+    name: { $regex: query, $options: 'i' },
+  }).populate('category').populate('description');
 
   return products;
 };
