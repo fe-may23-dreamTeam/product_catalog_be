@@ -36,4 +36,14 @@ const getOne = async (productId: string) => {
   return foundProduct;
 };
 
-export default { getAll, getOne };
+const getFiltered = async (query: string) => {
+  const products = await Product.find({
+    name: { $regex: query, $options: 'i' },
+  })
+    .populate('category')
+    .populate('description');
+
+  return products;
+};
+
+export default { getAll, getOne, getFiltered };

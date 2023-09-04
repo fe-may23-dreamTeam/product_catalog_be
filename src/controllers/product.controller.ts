@@ -28,7 +28,7 @@ const getOne = async (req: Request, res: Response) => {
     const foundProduct = await productsService.getOne(productId);
 
     if (foundProduct) {
-      res.status(200).json(foundProduct);
+      res.status(200).send(foundProduct);
     } else {
       res.status(404).send('Not found');
     }
@@ -37,4 +37,29 @@ const getOne = async (req: Request, res: Response) => {
   }
 };
 
-export default { getAll, getOne };
+interface ReqQuery {
+  query: string;
+}
+
+const getFiltered = async (
+  req: Request<{}, {}, {}, ReqQuery>,
+  res: Response,
+) => {
+  const { query } = req.query;
+
+  try {
+    const filteredProducts = await productsService.getFiltered(query);
+
+    if (filteredProducts.length) {
+      res.status(200).send(filteredProducts);
+    } else {
+      res.status(404).send('Not found');
+    }
+  } catch {
+    res.status(500).send({
+      data: null,
+    });
+  }
+};
+
+export default { getAll, getOne, getFiltered };
