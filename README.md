@@ -36,3 +36,31 @@ The `/products` endpoint returns a list of products in JSON format. Example resp
   ]
 }
 ```
+
+Request
+
+- **GET /products/:id**
+
+Params
+
+ - **`:id`**: Product id
+
+Example:
+
+```http
+GET /products/productId
+```
+
+Response
+
+The `/products/:id` endpoint returns a list of products in JSON format. Example response:
+
+```json
+{
+  "id": "string",
+  "priceDiscount": 1000,
+  "name": "string"
+  // ...
+}
+```
+
