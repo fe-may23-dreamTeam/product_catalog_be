@@ -62,21 +62,11 @@ const getFiltered = async (
   }
 };
 
-const getRecommended = async (req: Request, res: Response) => {
-  const productId = req.params.id;
-
+const getRecommended = async (_: Request, res: Response) => {
   try {
-    const foundProduct = await productsService.getOne(productId);
+    const randomProducts = await productsService.getRandom(10);
 
-    if (foundProduct) {
-      const allProducts = await productsService.allProducts();
-
-      const randomProducts = productsService.getRandom(allProducts, 10);
-
-      res.status(200).send(randomProducts);
-    } else {
-      res.status(404).send('Not found');
-    }
+    res.status(200).send(randomProducts);
   } catch {
     res.status(500).send('Error');
   }

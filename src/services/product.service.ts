@@ -1,4 +1,4 @@
-import { IProduct, Product } from '../models/product.model';
+import { Product } from '../models/product.model';
 
 type Params = {
   page: number;
@@ -6,12 +6,10 @@ type Params = {
   sortBy: string;
 };
 
-const allProducts = async () => {
-  const getAllProducts = await Product.find()
+const allProducts = () => {
+  return Product.find()
     .populate('category')
     .populate('description');
-
-  return getAllProducts;
 };
 
 const getAll = async ({ page, perPage, sortBy }: Params) => {
@@ -54,7 +52,8 @@ const getFiltered = async (query: string) => {
   return products;
 };
 
-function getRandom(products: IProduct[], limit: number) {
+const getRandom = async(limit: number) => {
+  const products = await allProducts();
   const randomProducts = [];
   const indexes: number[] = [];
   let i = 0;
@@ -72,7 +71,7 @@ function getRandom(products: IProduct[], limit: number) {
   }
 
   return randomProducts;
-}
+};
 
 export default {
   allProducts,
