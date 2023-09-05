@@ -6,6 +6,14 @@ type Params = {
   sortBy: string;
 };
 
+const allProducts = async () => {
+  const getAllProducts = await Product.find()
+    .populate('category')
+    .populate('description');
+
+  return getAllProducts;
+};
+
 const getAll = async ({ page, perPage, sortBy }: Params) => {
   const offset = perPage * (page - 1);
   const order = sortBy === 'Newest' ? 'desc' : 'asc';
@@ -67,6 +75,7 @@ function getRandom(products: IProduct[], limit: number) {
 }
 
 export default {
+  allProducts,
   getAll,
   getOne,
   getFiltered,

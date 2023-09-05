@@ -2,7 +2,6 @@
 /* eslint-disable no-shadow */
 import { Request, Response } from 'express';
 import productsService from '../services/product.service';
-import { Product } from '../models/product.model';
 
 const DEFAULT_LIMIT = 4;
 
@@ -70,13 +69,11 @@ const getRecommended = async (req: Request, res: Response) => {
     const foundProduct = await productsService.getOne(productId);
 
     if (foundProduct) {
-      const allProducts = await Product.find()
-        .populate('description')
-        .populate('category');
+      const allProducts = await productsService.allProducts();
 
       const randomProducts = productsService.getRandom(allProducts, 10);
 
-      res.status(200).json(randomProducts);
+      res.status(200).send(randomProducts);
     } else {
       res.status(404).send('Not found');
     }
