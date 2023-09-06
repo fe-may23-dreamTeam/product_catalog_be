@@ -82,6 +82,7 @@ const getNew = async (_: Request, res: Response) => {
     });
   }
 };
+
 const getByType = async (req: Request, res: Response) => {
   const type = req.query.type as string;
 
