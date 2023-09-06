@@ -22,7 +22,18 @@ const isQuery = (
   return next('route');
 };
 
+const isType = (req: Request, res: Response, next: NextFunction) => {
+  const { type } = req.query;
+
+  if (type) {
+    return next();
+  }
+
+  return next('route');
+};
+
 router.get('/', isQuery, productsController.getFiltered);
+router.get('/', isType, productsController.getByType);
 router.get('/', productsController.getAll);
 router.get('/:id', productsController.getOne);
 router.get('/:id/recommended', productsController.getRecommended);

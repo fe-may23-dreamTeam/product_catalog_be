@@ -7,9 +7,7 @@ type Params = {
 };
 
 const allProducts = () => {
-  return Product.find()
-    .populate('category')
-    .populate('description');
+  return Product.find().populate('category').populate('description');
 };
 
 const getAll = async ({ page, perPage, sortBy }: Params) => {
@@ -52,7 +50,7 @@ const getFiltered = async (query: string) => {
   return products;
 };
 
-const getRandom = async(limit: number) => {
+const getRandom = async (limit: number) => {
   const products = await allProducts();
   const randomProducts = [];
   const indexes: number[] = [];
@@ -73,9 +71,35 @@ const getRandom = async(limit: number) => {
   return randomProducts;
 };
 
+const getByType = async (type: string) => {
+  switch (type) {
+    case 'phones': {
+      return Product.find()
+        .populate({
+          path: 'category',
+          match: {
+            name: 'phones',
+          },
+        })
+        .populate('description');
+    }
+
+    case 'tablets': {
+      return ['tablets'];
+    }
+
+    case 'accessories': {
+      return ['accessories'];
+    }
+
+    default:
+      return [];
+  }
+};
+
 export default {
-  allProducts,
   getAll,
+  getByType,
   getOne,
   getFiltered,
   getRandom,
