@@ -62,4 +62,19 @@ const getFiltered = async (
   }
 };
 
-export default { getAll, getOne, getFiltered };
+const getRecommended = async (_: Request, res: Response) => {
+  try {
+    const randomProducts = await productsService.getRandom(10);
+
+    res.status(200).send(randomProducts);
+  } catch {
+    res.status(500).send('Error');
+  }
+};
+
+export default {
+  getAll,
+  getOne,
+  getFiltered,
+  getRecommended,
+};

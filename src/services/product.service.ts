@@ -6,6 +6,12 @@ type Params = {
   sortBy: string;
 };
 
+const allProducts = () => {
+  return Product.find()
+    .populate('category')
+    .populate('description');
+};
+
 const getAll = async ({ page, perPage, sortBy }: Params) => {
   const offset = perPage * (page - 1);
   const order = sortBy === 'Newest' ? 'desc' : 'asc';
@@ -46,4 +52,31 @@ const getFiltered = async (query: string) => {
   return products;
 };
 
-export default { getAll, getOne, getFiltered };
+const getRandom = async(limit: number) => {
+  const products = await allProducts();
+  const randomProducts = [];
+  const indexes: number[] = [];
+  let i = 0;
+
+  while (i < limit) {
+    const randomIndex = Math.floor(Math.random() * products.length);
+
+    if (indexes.includes(randomIndex)) {
+      continue;
+    } else {
+      indexes.push(randomIndex);
+      i++;
+      randomProducts.push(products[randomIndex]);
+    }
+  }
+
+  return randomProducts;
+};
+
+export default {
+  allProducts,
+  getAll,
+  getOne,
+  getFiltered,
+  getRandom,
+};
