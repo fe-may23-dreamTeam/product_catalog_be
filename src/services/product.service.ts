@@ -77,9 +77,36 @@ const getNew = async () => {
   return products;
 };
 
+const getByType = async (type: string) => {
+  switch (type) {
+    case 'phones': {
+      return Product.find()
+        .populate({
+          path: 'category',
+          match: {
+            name: 'phones',
+          },
+        })
+        .populate('description');
+    }
+
+    case 'tablets': {
+      return ['tablets'];
+    }
+
+    case 'accessories': {
+      return ['accessories'];
+    }
+
+    default:
+      return [];
+  }
+};
+
 export default {
   getNew,
   getAll,
+  getByType,
   getOne,
   getFiltered,
   getRandom,
