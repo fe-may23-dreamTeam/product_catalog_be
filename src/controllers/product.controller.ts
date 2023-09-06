@@ -40,6 +40,26 @@ const getOne = async (req: Request, res: Response) => {
   }
 };
 
+const getOneByDetails = async (req: Request, res: Response) => {
+  const color = req.query.color as string;
+  const capacity = req.query.capacity as string;
+  const { id } = req.params;
+
+  try {
+    const product = await productsService.getOneByDetails({
+      id,
+      color,
+      capacity,
+    });
+
+    res.status(200).send(product);
+  } catch (error) {
+    res.status(500).send({
+      data: null,
+    });
+  }
+};
+
 const getFiltered = async (
   req: Request<{}, {}, {}, ReqQuery>,
   res: Response,
@@ -102,4 +122,5 @@ export default {
   getOne,
   getFiltered,
   getRecommended,
+  getOneByDetails,
 };

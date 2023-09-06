@@ -31,11 +31,21 @@ const isType = (req: Request, res: Response, next: NextFunction) => {
 
   return next('route');
 };
+const checkPhoneDetails = (req: Request, res: Response, next: NextFunction) => {
+  const { color, capacity } = req.query;
+
+  if (color || capacity) {
+    return next();
+  }
+
+  return next('route');
+};
 
 router.get('/', isQuery, productsController.getFiltered);
 router.get('/', isType, productsController.getByType);
 router.get('/', productsController.getAll);
 router.get('/new', productsController.getNew);
+router.get('/:id', checkPhoneDetails, productsController.getOneByDetails);
 router.get('/:id', productsController.getOne);
 router.get('/:id/recommended', productsController.getRecommended);
 

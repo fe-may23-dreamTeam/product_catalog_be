@@ -6,6 +6,12 @@ type Params = {
   sortBy: string;
 };
 
+type Details = {
+  id: string;
+  color: string;
+  capacity: string;
+};
+
 const allProducts = () => {
   return Product.find().populate('category').populate('description');
 };
@@ -38,6 +44,44 @@ const getOne = async (productId: string) => {
     .populate('category');
 
   return foundProduct;
+};
+
+const getOneByDetails = async ({ id, color, capacity }: Details) => {
+  const {
+    namespaceId,
+    capacity: oldCapacity,
+    color: oldColor,
+  } = await Product.findById(id);
+
+  console.log(color, capacity);
+
+  if (capacity) {
+    const product = await Product.findOne({
+      namespaceId,
+      capacity,
+      color: oldColor,
+    })
+      .populate('category')
+      .populate('description');
+
+    console.log('Capacity', product);
+
+    return product;
+  }
+
+  if (color) {
+    const product = await Product.findOne({
+      namespaceId,
+      color,
+      capacity: oldCapacity,
+    })
+      .populate('category')
+      .populate('description');
+
+    console.log('Color', product);
+
+    return product;
+  }
 };
 
 const getFiltered = async (query: string) => {
@@ -110,4 +154,5 @@ export default {
   getOne,
   getFiltered,
   getRandom,
+  getOneByDetails,
 };
