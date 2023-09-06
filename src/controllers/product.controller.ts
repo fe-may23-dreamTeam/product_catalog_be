@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 /* eslint-disable no-shadow */
 import { Request, Response } from 'express';
 import productsService from '../services/product.service';
@@ -38,6 +37,26 @@ const getOne = async (req: Request, res: Response) => {
     }
   } catch {
     res.status(500).send('Error');
+  }
+};
+
+const getOneByDetails = async (req: Request, res: Response) => {
+  const color = req.query.color as string;
+  const capacity = req.query.capacity as string;
+  const { id } = req.params;
+
+  try {
+    const product = await productsService.getOneByDetails({
+      id,
+      color,
+      capacity,
+    });
+
+    res.status(200).send(product);
+  } catch (error) {
+    res.status(500).send({
+      data: null,
+    });
   }
 };
 
@@ -103,4 +122,5 @@ export default {
   getOne,
   getFiltered,
   getRecommended,
+  getOneByDetails,
 };
