@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 /* eslint-disable no-shadow */
 import { Request, Response } from 'express';
 import productsService from '../services/product.service';
@@ -83,10 +82,22 @@ const getNew = async (_: Request, res: Response) => {
     });
   }
 };
+const getByType = async (req: Request, res: Response) => {
+  const type = req.query.type as string;
+
+  try {
+    const pruductsByType = await productsService.getByType(type);
+
+    res.status(200).send(pruductsByType);
+  } catch {
+    res.status(500).send('Error');
+  }
+};
 
 export default {
   getNew,
   getAll,
+  getByType,
   getOne,
   getFiltered,
   getRecommended,
