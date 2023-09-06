@@ -5,6 +5,10 @@ import productsService from '../services/product.service';
 
 const DEFAULT_LIMIT = 4;
 
+interface ReqQuery {
+  query: string;
+}
+
 const getAll = async (req: Request, res: Response) => {
   const page = Number(req.query.page) || 1;
   const perPage = Number(req.query.perPage) || DEFAULT_LIMIT;
@@ -37,10 +41,6 @@ const getOne = async (req: Request, res: Response) => {
   }
 };
 
-interface ReqQuery {
-  query: string;
-}
-
 const getFiltered = async (
   req: Request<{}, {}, {}, ReqQuery>,
   res: Response,
@@ -72,6 +72,18 @@ const getRecommended = async (_: Request, res: Response) => {
   }
 };
 
+const getNew = async (_: Request, res: Response) => {
+  try {
+    const products = await productsService.getNew();
+
+    res.status(200).send(products);
+  } catch (error) {
+    res.status(500).send({
+      data: null,
+    });
+  }
+};
+
 const getByType = async (req: Request, res: Response) => {
   const type = req.query.type as string;
 
@@ -85,6 +97,7 @@ const getByType = async (req: Request, res: Response) => {
 };
 
 export default {
+  getNew,
   getAll,
   getByType,
   getOne,

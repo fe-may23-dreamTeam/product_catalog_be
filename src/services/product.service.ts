@@ -71,6 +71,12 @@ const getRandom = async (limit: number) => {
   return randomProducts;
 };
 
+const getNew = async () => {
+  const products = await allProducts().sort({ createdAt: 'desc' }).limit(8);
+
+  return products;
+};
+
 const getByType = async (type: string) => {
   switch (type) {
     case 'phones': {
@@ -98,6 +104,7 @@ const getByType = async (type: string) => {
 };
 
 export default {
+  getNew,
   getAll,
   getByType,
   getOne,
