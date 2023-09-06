@@ -103,6 +103,18 @@ const getNew = async (_: Request, res: Response) => {
   }
 };
 
+const getDiscount = async (_: Request, res: Response) => {
+  try {
+    const products = await productsService.getDiscount();
+
+    res.status(200).send(products);
+  } catch (error) {
+    res.status(500).send({
+      data: null,
+    });
+  }
+};
+
 const getByType = async (req: Request, res: Response) => {
   const type = req.query.type as string;
 
@@ -116,6 +128,7 @@ const getByType = async (req: Request, res: Response) => {
 };
 
 export default {
+  getDiscount,
   getNew,
   getAll,
   getByType,

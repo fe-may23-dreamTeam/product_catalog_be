@@ -121,6 +121,33 @@ const getNew = async () => {
   return products;
 };
 
+const getDiscount = async () => {
+  const products = await allProducts();
+
+  const sortedProducts = products.sort((a, b) => {
+    const aPriceDiff = a.priceRegular - a.priceDiscount;
+    const bPriceDiff = b.priceRegular - b.priceDiscount;
+
+    return bPriceDiff - aPriceDiff;
+  });
+
+  const uniqueProducts = [];
+  const namespaceIds = new Set();
+
+  for (const product of sortedProducts) {
+    if (!namespaceIds.has(product.namespaceId)) {
+      uniqueProducts.push(product);
+      namespaceIds.add(product.namespaceId);
+    }
+
+    if (uniqueProducts.length === 8) {
+      break;
+    }
+  }
+
+  return uniqueProducts;
+};
+
 const getByType = async (type: string) => {
   switch (type) {
     case 'phones': {
@@ -148,6 +175,7 @@ const getByType = async (type: string) => {
 };
 
 export default {
+  getDiscount,
   getNew,
   getAll,
   getByType,
