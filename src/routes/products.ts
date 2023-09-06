@@ -24,6 +24,7 @@ const isQuery = (
 
 router.get('/', isQuery, productsController.getFiltered);
 router.get('/', productsController.getAll);
+router.get('/new', productsController.getNew);
 router.get('/:id', productsController.getOne);
 router.get('/:id/recommended', productsController.getRecommended);
 
