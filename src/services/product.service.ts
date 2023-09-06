@@ -122,11 +122,7 @@ const getNew = async () => {
 };
 
 const getDiscount = async () => {
-  const products = await Product.find({
-    priceDiscount: { $gt: 0 },
-  })
-    .populate('category')
-    .populate('description');
+  const products = await allProducts();
 
   const sortedProducts = products.sort((a, b) => {
     const aPriceDiff = a.priceRegular - a.priceDiscount;
