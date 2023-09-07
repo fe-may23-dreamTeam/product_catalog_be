@@ -40,7 +40,7 @@ const getAll = async ({ page, perPage, sortBy, type }: Params) => {
     .skip(offset)
     .limit(perPage);
 
-  const productsCollectionCount = await Product.count();
+  const productsCollectionCount = await Product.count().populate(category);
 
   const data = {
     totalProducts: productsCollectionCount,
