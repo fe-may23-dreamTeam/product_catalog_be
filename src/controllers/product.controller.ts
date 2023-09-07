@@ -2,7 +2,7 @@
 import { Request, Response } from 'express';
 import productsService from '../services/product.service';
 
-const DEFAULT_LIMIT = 4;
+const DEFAULT_LIMIT = 8;
 
 interface ReqQuery {
   query: string;
