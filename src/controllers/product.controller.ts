@@ -2,7 +2,7 @@
 import { Request, Response } from 'express';
 import productsService from '../services/product.service';
 
-const DEFAULT_LIMIT = 4;
+const DEFAULT_LIMIT = 8;
 
 interface ReqQuery {
   query: string;
@@ -12,9 +12,15 @@ const getAll = async (req: Request, res: Response) => {
   const page = Number(req.query.page) || 1;
   const perPage = Number(req.query.perPage) || DEFAULT_LIMIT;
   const sortBy = String(req.query.sortBy) || 'Newest';
+  const type = String(req.query.type) || '';
 
   try {
-    const data = await productsService.getAll({ page, perPage, sortBy });
+    const data = await productsService.getAll({
+      page,
+      perPage,
+      sortBy,
+      type,
+    });
 
     res.status(200).send(data);
   } catch {
@@ -115,23 +121,10 @@ const getDiscount = async (_: Request, res: Response) => {
   }
 };
 
-const getByType = async (req: Request, res: Response) => {
-  const type = req.query.type as string;
-
-  try {
-    const pruductsByType = await productsService.getByType(type);
-
-    res.status(200).send(pruductsByType);
-  } catch {
-    res.status(500).send('Error');
-  }
-};
-
 export default {
   getDiscount,
   getNew,
   getAll,
-  getByType,
   getOne,
   getFiltered,
   getRecommended,
