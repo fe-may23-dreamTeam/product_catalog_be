@@ -109,7 +109,20 @@ const getNew = async (_: Request, res: Response) => {
   }
 };
 
+const getDiscount = async (_: Request, res: Response) => {
+  try {
+    const products = await productsService.getDiscount();
+
+    res.status(200).send(products);
+  } catch (error) {
+    res.status(500).send({
+      data: null,
+    });
+  }
+};
+
 export default {
+  getDiscount,
   getNew,
   getAll,
   getOne,

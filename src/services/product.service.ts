@@ -65,8 +65,6 @@ const getOneByDetails = async ({ id, color, capacity }: Details) => {
     color: oldColor,
   } = await Product.findById(id);
 
-  console.log(color, capacity);
-
   if (capacity) {
     const product = await Product.findOne({
       namespaceId,
@@ -75,8 +73,6 @@ const getOneByDetails = async ({ id, color, capacity }: Details) => {
     })
       .populate('category')
       .populate('description');
-
-    console.log('Capacity', product);
 
     return product;
   }
@@ -89,8 +85,6 @@ const getOneByDetails = async ({ id, color, capacity }: Details) => {
     })
       .populate('category')
       .populate('description');
-
-    console.log('Color', product);
 
     return product;
   }
@@ -133,7 +127,35 @@ const getNew = async () => {
   return products;
 };
 
+const getDiscount = async () => {
+  const products = await allProducts();
+
+  const sortedProducts = products.sort((a, b) => {
+    const aPriceDiff = a.priceRegular - a.priceDiscount;
+    const bPriceDiff = b.priceRegular - b.priceDiscount;
+
+    return bPriceDiff - aPriceDiff;
+  });
+
+  const uniqueProducts = [];
+  const namespaceIds = new Set();
+
+  for (const product of sortedProducts) {
+    if (!namespaceIds.has(product.namespaceId)) {
+      uniqueProducts.push(product);
+      namespaceIds.add(product.namespaceId);
+    }
+
+    if (uniqueProducts.length === 8) {
+      break;
+    }
+  }
+
+  return uniqueProducts;
+};
+
 export default {
+  getDiscount,
   getNew,
   getAll,
   getOne,

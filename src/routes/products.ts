@@ -35,6 +35,7 @@ const checkPhoneDetails = (req: Request, res: Response, next: NextFunction) => {
 router.get('/', isQuery, productsController.getFiltered);
 router.get('/', productsController.getAll);
 router.get('/new', productsController.getNew);
+router.get('/discount', productsController.getDiscount);
 router.get('/:id', checkPhoneDetails, productsController.getOneByDetails);
 router.get('/:id', productsController.getOne);
 router.get('/:id/recommended', productsController.getRecommended);
