@@ -11,7 +11,7 @@ export const app = express();
 
 mongooseConnect();
 
-app.use(express.json());
+app.use(cors(corsOptions)).use(express.json());
 
 app.get('/', async (_, res) => {
   res.status(200).send('Hello from DreamTeam');

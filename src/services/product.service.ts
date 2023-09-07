@@ -6,7 +6,7 @@ type Params = {
   page: number;
   perPage: number;
   sortBy: string;
-  type?: string;
+  type: string;
 };
 
 type Details = {
@@ -22,6 +22,7 @@ const allProducts = () => {
 const getAll = async ({ page, perPage, sortBy, type }: Params) => {
   const offset = perPage * (page - 1);
   const order = sortBy === 'Newest' ? 'desc' : 'asc';
+
   const category = await Category.findOne({ name: type });
 
   const productsCollection = await Product.find({ category: category._id })

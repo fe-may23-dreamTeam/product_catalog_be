@@ -12,7 +12,7 @@ const getAll = async (req: Request, res: Response) => {
   const page = Number(req.query.page) || 1;
   const perPage = Number(req.query.perPage) || DEFAULT_LIMIT;
   const sortBy = String(req.query.sortBy) || 'Newest';
-  const type = String(req.query.type) || '';
+  const type = (req.query.type as string) || 'phones';
 
   try {
     const data = await productsService.getAll({
@@ -23,10 +23,10 @@ const getAll = async (req: Request, res: Response) => {
     });
 
     res.status(200).send(data);
-  } catch {
-    res.status(500).send({
-      data: null,
-    });
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).send(error);
   }
 };
 
