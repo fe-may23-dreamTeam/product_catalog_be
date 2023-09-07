@@ -53,8 +53,6 @@ const getOneByDetails = async ({ id, color, capacity }: Details) => {
     color: oldColor,
   } = await Product.findById(id);
 
-  console.log(color, capacity);
-
   if (capacity) {
     const product = await Product.findOne({
       namespaceId,
@@ -63,8 +61,6 @@ const getOneByDetails = async ({ id, color, capacity }: Details) => {
     })
       .populate('category')
       .populate('description');
-
-    console.log('Capacity', product);
 
     return product;
   }
@@ -77,8 +73,6 @@ const getOneByDetails = async ({ id, color, capacity }: Details) => {
     })
       .populate('category')
       .populate('description');
-
-    console.log('Color', product);
 
     return product;
   }
