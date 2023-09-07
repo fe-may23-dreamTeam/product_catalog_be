@@ -1,4 +1,5 @@
 /* eslint-disable indent */
+import { Category } from '../models/category.model';
 import { Product } from '../models/product.model';
 
 type Params = {
@@ -21,18 +22,10 @@ const allProducts = () => {
 const getAll = async ({ page, perPage, sortBy, type }: Params) => {
   const offset = perPage * (page - 1);
   const order = sortBy === 'Newest' ? 'desc' : 'asc';
+  const category = await Category.findOne({ name: type });
 
-  const category = {
-    ...(type !== 'undefined' && {
-      match: {
-        name: type,
-      },
-    }),
-    path: 'category',
-  };
-
-  const productsCollection = await Product.find()
-    .populate(category)
+  const productsCollection = await Product.find({ category: category._id })
+    .populate('category')
     .populate('description')
     .sort({
       updatedAt: order,
@@ -40,10 +33,10 @@ const getAll = async ({ page, perPage, sortBy, type }: Params) => {
     .skip(offset)
     .limit(perPage);
 
-  const productsCollectionCount = await Product.count().populate(category);
+  const productsCount = await Product.find({ category: category._id }).count();
 
   const data = {
-    totalProducts: productsCollectionCount,
+    totalProducts: productsCount,
     data: productsCollection,
   };
 
