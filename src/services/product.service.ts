@@ -1,9 +1,11 @@
+/* eslint-disable indent */
 import { Product } from '../models/product.model';
 
 type Params = {
   page: number;
   perPage: number;
   sortBy: string;
+  type?: string;
 };
 
 type Details = {
@@ -16,18 +18,28 @@ const allProducts = () => {
   return Product.find().populate('category').populate('description');
 };
 
-const getAll = async ({ page, perPage, sortBy }: Params) => {
+const getAll = async ({ page, perPage, sortBy, type }: Params) => {
   const offset = perPage * (page - 1);
   const order = sortBy === 'Newest' ? 'desc' : 'asc';
 
+  const category = {
+    ...(type !== 'undefined' && {
+      match: {
+        name: type,
+      },
+    }),
+    path: 'category',
+  };
+
   const productsCollection = await Product.find()
-    .populate('category')
+    .populate(category)
     .populate('description')
     .sort({
       updatedAt: order,
     })
     .skip(offset)
     .limit(perPage);
+
   const productsCollectionCount = await Product.count();
 
   const data = {
@@ -121,36 +133,9 @@ const getNew = async () => {
   return products;
 };
 
-const getByType = async (type: string) => {
-  switch (type) {
-    case 'phones': {
-      return Product.find()
-        .populate({
-          path: 'category',
-          match: {
-            name: 'phones',
-          },
-        })
-        .populate('description');
-    }
-
-    case 'tablets': {
-      return ['tablets'];
-    }
-
-    case 'accessories': {
-      return ['accessories'];
-    }
-
-    default:
-      return [];
-  }
-};
-
 export default {
   getNew,
   getAll,
-  getByType,
   getOne,
   getFiltered,
   getRandom,

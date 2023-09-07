@@ -22,15 +22,6 @@ const isQuery = (
   return next('route');
 };
 
-const isType = (req: Request, res: Response, next: NextFunction) => {
-  const { type } = req.query;
-
-  if (type) {
-    return next();
-  }
-
-  return next('route');
-};
 const checkPhoneDetails = (req: Request, res: Response, next: NextFunction) => {
   const { color, capacity } = req.query;
 
@@ -42,7 +33,6 @@ const checkPhoneDetails = (req: Request, res: Response, next: NextFunction) => {
 };
 
 router.get('/', isQuery, productsController.getFiltered);
-router.get('/', isType, productsController.getByType);
 router.get('/', productsController.getAll);
 router.get('/new', productsController.getNew);
 router.get('/:id', checkPhoneDetails, productsController.getOneByDetails);
